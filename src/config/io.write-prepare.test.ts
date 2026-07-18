@@ -5,6 +5,7 @@ import {
   applyUnsetPathsForWrite,
   createMergePatch,
   formatConfigValidationFailure,
+  projectSourceOntoRuntimeShape,
   restoreEnvRefsFromMap,
   resolvePersistCandidateForWrite,
   resolveWriteEnvSnapshotForPath,
@@ -1493,6 +1494,21 @@ describe("config io write prepare", () => {
         explicitSetPaths: [["agents", "defaults", "params"]],
       }),
     ).toThrow("Config write would flatten $include-owned config at agents.defaults");
+  });
+
+  it("projectSourceOntoRuntimeShape: treats prototype-named keys as absent in runtime", () => {
+    // projectSourceOntoRuntimeShape uses Object.hasOwn to check whether
+    // each source key exists in runtime. Prototype collisions (e.g. a source
+    // key named "toString") must be treated as absent (new key) and kept as-is.
+    const source = { toString: "my-value", knownKey: "keep-me" };
+    // runtime has own "knownKey" but no own "toString":
+    const runtime = Object.create({ toString: "inherited" }) as Record<string, unknown>;
+    runtime.knownKey = "runtime-val";
+
+    const result = projectSourceOntoRuntimeShape(source, runtime);
+    // "toString" is a new key — kept as-is from source
+    // "knownKey" exists in runtime — projected recursively (a string is returned as-is)
+    expect(result).toEqual({ toString: "my-value", knownKey: "keep-me" });
   });
 });
 /* oxlint-disable max-lines -- TODO: split this grandfathered oversized file. */

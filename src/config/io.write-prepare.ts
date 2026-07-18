@@ -72,7 +72,7 @@ export function projectSourceOntoRuntimeShape(source: unknown, runtime: unknown)
 
   const next: Record<string, unknown> = {};
   for (const [key, sourceValue] of Object.entries(source)) {
-    if (!(key in runtime)) {
+    if (!Object.hasOwn(runtime, key)) {
       next[key] = cloneUnknown(sourceValue);
       continue;
     }
