@@ -1,0 +1,6 @@
+$ git checkout fix/msteams-ambiguous-5xx-no-retry   # 33ccdcd62e5
+$ node --import tsx proof.mjs
+connector received the activity 1 time(s)
+  delivery #1: POST /amer/v3/conversations/19:proof@thread.tacv2/activities bodyHasNeedle=true
+send result: threw after retries exhausted (Request failed with status code 500)
+PASS: ambiguous 5xx surfaced as an error after exactly one delivery — no duplicate message

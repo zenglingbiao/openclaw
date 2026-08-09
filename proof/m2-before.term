@@ -1,0 +1,5 @@
+$ git checkout upstream/main   # 87ba8ef82b4 
+$ node --import tsx proof.mjs
+resolved pruneAfterMs: 0
+entries before: 2 | pruned: 2 | remaining: 0
+FAIL: pruneAfterMs=0 deleted every session entry — live sessions vanished from routing/listing (data loss)

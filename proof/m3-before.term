@@ -1,0 +1,10 @@
+$ git checkout upstream/main   # 87ba8ef82b4 
+$ node --import tsx proof.mjs
+retry event: next attempt 2/3 in 250ms (kind=transient, status=500)
+retry event: next attempt 3/3 in 500ms (kind=transient, status=500)
+connector received the activity 3 time(s)
+  delivery #1: POST /amer/v3/conversations/19:proof@thread.tacv2/activities bodyHasNeedle=true
+  delivery #2: POST /amer/v3/conversations/19:proof@thread.tacv2/activities bodyHasNeedle=true
+  delivery #3: POST /amer/v3/conversations/19:proof@thread.tacv2/activities bodyHasNeedle=true
+send result: threw after retries exhausted (Request failed with status code 500)
+FAIL: one outbound message was delivered to Teams 3 times — ambiguous 5xx replay duplicated a non-idempotent activity create

@@ -1,0 +1,7 @@
+$ git checkout upstream/main   # 87ba8ef82b4 
+$ node --import tsx proof.mjs
+alice transcript rows on disk: 3 (2 fully readable, 1 torn)
+cleanup summary: beforeCount=2 afterCount=1 missing=1
+alice entry after cleanup: DELETED
+bob entry after cleanup:   KEPT
+FAIL: one torn row made --fix-missing delete a session whose transcript still holds 2 readable messages — the session vanished from routing/listing while its data stayed on disk (data loss)

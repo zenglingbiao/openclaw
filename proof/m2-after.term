@@ -1,0 +1,5 @@
+$ git checkout fix/sessions-prune-after-nonpositive   # 86c04f0c783
+$ node --import tsx proof.mjs
+resolved pruneAfterMs: 0
+entries before: 2 | pruned: 0 | remaining: 2
+PASS: non-positive pruneAfterMs disables age pruning; both sessions kept

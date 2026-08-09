@@ -1,0 +1,7 @@
+$ git checkout fix/sessions-cleanup-unreadable-transcript   # 80d6e3d0d0a
+$ node --import tsx proof.mjs
+alice transcript rows on disk: 3 (2 fully readable, 1 torn)
+cleanup summary: beforeCount=2 afterCount=2 missing=0
+alice entry after cleanup: KEPT
+bob entry after cleanup:   KEPT
+PASS: unreadable transcript treated as unavailable, not missing — entry kept and a warning was logged; healthy sessions unaffected
