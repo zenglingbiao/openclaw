@@ -1,0 +1,7 @@
+$ node --import tsx proof.mjs
+
+discordOutbound.sanitizeText present: true
+--- text delivered to Discord ---
+Visible answer for the Discord user.
+---------------------------------
+PASS: internal scaffolding stripped, visible answer preserved
