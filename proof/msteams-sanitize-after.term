@@ -1,0 +1,7 @@
+$ node --import tsx proof.mjs
+
+msteams outbound sanitizeText present: true
+--- text delivered to MS Teams ---
+Visible answer for the Teams user.
+----------------------------------
+PASS: internal scaffolding stripped, visible answer preserved

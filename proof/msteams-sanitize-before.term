@@ -1,0 +1,12 @@
+$ node --import tsx proof.mjs
+
+msteams outbound sanitizeText present: false
+--- text delivered to MS Teams ---
+<invoke name="read">payload</invoke></minimax:tool_call>
+<tool_result>{"output":"hidden"}</tool_result>
+[Tool Call: read (ID: toolu_1)]
+Arguments: {"path":"/tmp/x"}
+<think>secret chain-of-thought</think>
+Visible answer for the Teams user.
+----------------------------------
+FAIL: internal tool-trace scaffolding reaches MS Teams users unsanitized
