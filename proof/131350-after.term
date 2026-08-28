@@ -1,0 +1,6 @@
+$ git checkout fix/read-boolean-param-snake-case # d9d8648f07c
+$ node --import tsx scripts/proof-read-boolean-param-snake-case.mjs
+readToolStringParam({account_id:"acct-1"}, "accountId") => "acct-1"
+readBooleanParam({dry_run:true}, "dryRun")           => true
+Effective dryRun at message-action-runner gate => true
+PASS: dry_run:true honored, dry-run preview stays dry

@@ -1,0 +1,8 @@
+$ git checkout upstream/main # 9458d8b1810
+$ node --import tsx proof-apply-patch-host-write.mjs
+write error: disk full ENOSPC
+file bytes after failed write: 646
+original bytes: 1161
+FAIL: original host file was corrupted by the partial write
+--- surviving content head ---
+"replacement\npatched content\npatched content\npatched content\npatched content\npatc"

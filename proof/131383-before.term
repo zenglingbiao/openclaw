@@ -1,0 +1,17 @@
+$ git checkout upstream/main # 9458d8b1810
+$ node --import tsx scripts/proof-memory-forget-atomic.mjs
+=== Scenario 1: ENOSPC halfway through the MEMORY.md rewrite ===
+forgetMemoryEntries error: ENOSPC
+--- MEMORY.md after failed forget ---
+# Long-Term Memory
+Curated ope
+---------------------------------------
+FAIL: original MEMORY.md was destroyed by the failed rewrite (long-term memory lost)
+=== Scenario 2: directory rejects temp-file replacement (EACCES) ===
+forgetMemoryEntries error: (none)
+--- MEMORY.md after forget ---
+# Long-Term Memory
+Curated operator fact that must survive.
+
+---------------------------------------
+PASS: writable-file fallback completed the rewrite

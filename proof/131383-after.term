@@ -1,0 +1,20 @@
+$ git checkout fix/memory-forget-atomic-rewrite # 7b657d3c7fb
+$ node --import tsx scripts/proof-memory-forget-atomic.mjs
+=== Scenario 1: ENOSPC halfway through the MEMORY.md rewrite ===
+forgetMemoryEntries error: ENOSPC
+--- MEMORY.md after failed forget ---
+# Long-Term Memory
+Curated operator fact that must survive.
+<!-- openclaw-memory-promotion:archived-enospc-entry -->
+- Archived secret to forget.
+
+---------------------------------------
+PASS: original MEMORY.md intact after the failed rewrite
+=== Scenario 2: directory rejects temp-file replacement (EACCES) ===
+forgetMemoryEntries error: (none)
+--- MEMORY.md after forget ---
+# Long-Term Memory
+Curated operator fact that must survive.
+
+---------------------------------------
+PASS: writable-file fallback completed the rewrite

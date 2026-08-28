@@ -1,0 +1,19 @@
+$ git checkout fix/daytona-transient-retry-classification # c9505153d25
+$ node --import tsx scripts/proof-daytona-transient-retry.mjs
+=== Scenario A: real ECONNREFUSED on loopback, then recovery ===
+attempt 1 @ +0ms: GET http://127.0.0.1:46607/
+attempt 1 threw real fault -> TypeError: fetch failed | cause: Error code=ECONNREFUSED
+attempt 2 @ +314ms: control plane back up
+attempt 2 @ +314ms: GET http://127.0.0.1:46607/
+attempts=2 outcome="ok"
+PASS: real ECONNREFUSED classified transient, retried, recovered
+=== Scenario B: real socket destroy mid-request, then recovery ===
+attempt 1 @ +0ms: GET http://127.0.0.1:42183/
+attempt 1 threw real fault -> TypeError: fetch failed | cause: SocketError code=UND_ERR_SOCKET
+attempt 2 @ +307ms: GET http://127.0.0.1:42183/
+attempts=2 outcome="ok"
+PASS: real socket fault classified transient, retried, recovered
+=== Scenario C: real HTTP 400 stays permanent (fail fast) ===
+attempt 1: GET http://127.0.0.1:36913/
+attempts=1 outcome="Error: invalid request statusCode=400"
+PASS: permanent 400 failed fast on attempt 1

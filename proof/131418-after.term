@@ -1,0 +1,6 @@
+$ git checkout fix/apply-patch-host-atomic-write # 83d634c2d1b
+$ node --import tsx proof-apply-patch-host-write.mjs
+write error: disk full ENOSPC
+file bytes after failed write: 1161
+original bytes: 1161
+PASS: original host file content fully preserved after failed write

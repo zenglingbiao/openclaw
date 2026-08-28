@@ -1,0 +1,6 @@
+$ git checkout upstream/main # 9458d8b1810
+$ node --import tsx scripts/proof-read-boolean-param-snake-case.mjs
+readToolStringParam({account_id:"acct-1"}, "accountId") => "acct-1"
+readBooleanParam({dry_run:true}, "dryRun")           => undefined
+Effective dryRun at message-action-runner gate => false
+FAIL: model asked for dry_run:true but dryRun resolved false -> real message would be delivered

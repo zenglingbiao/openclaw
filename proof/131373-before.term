@@ -1,0 +1,18 @@
+$ git checkout upstream/main # 9458d8b1810
+$ node --import tsx scripts/proof-daytona-transient-retry.mjs
+=== Scenario A: real ECONNREFUSED on loopback, then recovery ===
+attempt 1 @ +0ms: GET http://127.0.0.1:44421/
+attempt 1 threw real fault -> TypeError: fetch failed | cause: Error code=ECONNREFUSED
+withDaytonaRetry gave up after 1 attempt(s): TypeError: fetch failed | cause: Error code=ECONNREFUSED
+attempts=1 outcome=undefined
+FAIL: real ECONNREFUSED should have been retried and recovered
+=== Scenario B: real socket destroy mid-request, then recovery ===
+attempt 1 @ +0ms: GET http://127.0.0.1:36377/
+attempt 1 threw real fault -> TypeError: fetch failed | cause: SocketError code=UND_ERR_SOCKET
+withDaytonaRetry gave up after 1 attempt(s): TypeError: fetch failed | cause: SocketError code=UND_ERR_SOCKET
+attempts=1 outcome=undefined
+FAIL: real socket fault should have been retried and recovered
+=== Scenario C: real HTTP 400 stays permanent (fail fast) ===
+attempt 1: GET http://127.0.0.1:42213/
+attempts=1 outcome="Error: invalid request statusCode=400"
+PASS: permanent 400 failed fast on attempt 1
