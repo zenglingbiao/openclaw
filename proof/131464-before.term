@@ -1,0 +1,22 @@
+$ node --import tsx proof.mjs /tmp/oc-before-131464
+repo: /tmp/oc-before-131464
+delivery API detected: completeNext (conversation FIFO head)
+
+[real-time] late final reply from an already-terminal older task
+PASS: T1 keeps its terminal state unchanged — state=TASK_STATE_FAILED artifacts=0
+FAIL: T2 is not completed by T1's late reply — state=TASK_STATE_COMPLETED artifact="stale reply from T1"
+FAIL: T2 completes with its own reply text — state=TASK_STATE_COMPLETED artifact="stale reply from T1"
+
+[time-compressed] Date.now shifted: hung task sweep + terminal retention
+FAIL: hung task becomes TASK_STATE_FAILED after 1h without a status change — state=TASK_STATE_WORKING
+FAIL: task no longer occupies the store after terminal retention (24h) — still tracked: TASK_STATE_WORKING
+
+[deadline-first] final delivery is the first store operation after the deadline
+FAIL: idle task is failed, not completed, by the first post-deadline delivery — state=TASK_STATE_COMPLETED artifacts=1
+
+[timer-driven] captured setTimeout: idle task fails with no store access at all
+FAIL: task owns a 1h expiry timer at creation — timers=0 ms=undefined
+FAIL: idle task fails on its own timer without any store access — state=TASK_STATE_SUBMITTED
+FAIL: terminal transition disarms the expiry timer — completeTask API missing
+
+8 CHECK(S) FAILED

@@ -1,0 +1,24 @@
+$ node --import tsx proof.mjs /home/0668001395/openclaw-wt-pr131464
+repo: /home/0668001395/openclaw-wt-pr131464
+delivery API detected: completeTask (bound to originating task)
+
+[real-time] late final reply from an already-terminal older task
+PASS: T1's late reply is dropped instead of stored — completeTask returned undefined
+PASS: T1 keeps its terminal state unchanged — state=TASK_STATE_FAILED artifacts=0
+PASS: T2 is not completed by T1's late reply — state=TASK_STATE_WORKING artifact=undefined
+PASS: T2 completes with its own reply text — state=TASK_STATE_COMPLETED artifact="fresh reply for T2"
+
+[time-compressed] Date.now shifted: hung task sweep + terminal retention
+PASS: hung task becomes TASK_STATE_FAILED after 1h without a status change — state=TASK_STATE_FAILED
+PASS: task no longer occupies the store after terminal retention (24h) — reaped
+
+[deadline-first] final delivery is the first store operation after the deadline
+PASS: post-deadline delivery is rejected — completeTask returned undefined
+PASS: idle task is failed, not completed, by the first post-deadline delivery — state=TASK_STATE_FAILED artifacts=0
+
+[timer-driven] captured setTimeout: idle task fails with no store access at all
+PASS: task owns a 1h expiry timer at creation — timers=1 ms=3600000
+PASS: idle task fails on its own timer without any store access — state=TASK_STATE_FAILED
+PASS: terminal transition disarms the expiry timer — liveTimers=0 state=TASK_STATE_COMPLETED
+
+ALL CHECKS PASSED
