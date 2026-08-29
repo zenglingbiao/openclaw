@@ -1,0 +1,17 @@
+$ node --import tsx proof.mjs /tmp/oc-before-131455
+=== proof-131455: subagent control dispatch vs Gateway replacement ===
+worktree: /tmp/oc-before-131464
+
+[scenario 1: run bound to A; replacement B global + B activated the registry]
+  steer result: {"status":"accepted","runId":"run-proof-active-owner-new-B","sessionKey":"agent:main:subagent:proof-active-owner","mode":"restart","label":"old direction","text":"steered old direction."}
+  dispatch counters: A.dispatchAgent=0 A.waitForAgent=0 B.dispatchAgent=1 B.waitForAgent=2 genericTransport=0
+  run binding after B activation: still A (correct)
+  FAIL: steer for an A-bound run was dispatched to replacement Gateway B (split-brain)
+
+[scenario 2: registry owner A closed (real instance close); replacement B still global]
+  steer result: {"status":"accepted","runId":"run-proof-stale-owner-new-B","sessionKey":"agent:main:subagent:proof-stale-owner","mode":"restart","label":"old direction","text":"steered old direction."}
+  dispatch counters: A.dispatchAgent=0 A.waitForAgent=0 B.dispatchAgent=1 B.waitForAgent=2 genericTransport=0
+  run binding after B activation: still A (correct)
+  FAIL: stale owner binding fell through to replacement Gateway B (split-brain); steer status=accepted
+
+RESULT: FAIL (2 failing scenario(s))

@@ -1,0 +1,17 @@
+$ node --import tsx proof.mjs /home/0668001395/openclaw-wt-pr131455
+=== proof-131455: subagent control dispatch vs Gateway replacement ===
+worktree: /home/0668001395/openclaw-wt-pr131455
+
+[scenario 1: run bound to A; replacement B global + B activated the registry]
+  steer result: {"status":"accepted","runId":"run-proof-active-owner-new-A","sessionKey":"agent:main:subagent:proof-active-owner","mode":"restart","label":"old direction","text":"steered old direction."}
+  dispatch counters: A.dispatchAgent=1 A.waitForAgent=2 B.dispatchAgent=0 B.waitForAgent=0 genericTransport=0
+  run binding after B activation: still A (correct)
+  PASS: steer dispatch stayed on the run's bound owner Gateway A
+
+[scenario 2: registry owner A closed (real instance close); replacement B still global]
+  steer result: {"status":"error","runId":"d7df8585-c896-4233-9d3e-86d8966f0ce8","sessionKey":"agent:main:subagent:proof-stale-owner","error":"Subagent registry owner Gateway is stale; refusing to dispatch agent to a replacement Gateway"}
+  dispatch counters: A.dispatchAgent=0 A.waitForAgent=0 B.dispatchAgent=0 B.waitForAgent=0 genericTransport=0
+  run binding after B activation: still A (correct)
+  PASS: stale owner failed closed (visible error; zero dispatch on A, B, and the generic transport)
+
+RESULT: PASS
