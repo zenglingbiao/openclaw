@@ -1,0 +1,18 @@
+$ node --import tsx proof.mjs /tmp/oc-oldhead-131431
+repo: /tmp/oc-oldhead-131431
+
+=== Scenario 1: save fails partway through the write (real EFBIG) ===
+original bytes: 35 | payload bytes: 9504
+child save error: EFBIG
+settings.json bytes after failed save: 35
+packages after reload: ["npm:@openclaw/keep"]
+PASS: settings.json fully preserved after failed save — 35 bytes
+PASS: user packages setting survives the reload
+
+=== Scenario 2: existing final settings.json symlink ===
+settings.json is still a symlink: false
+operator-managed target content: {"packages":["old"]}
+FAIL: final settings.json symlink preserved
+FAIL: symlink target received the update — {"packages":["old"]}
+
+2 CHECK(S) FAILED

@@ -1,0 +1,18 @@
+$ node --import tsx proof.mjs /home/0668001395/openclaw-wt-settings-json-atomic-write
+repo: /home/0668001395/openclaw-wt-settings-json-atomic-write
+
+=== Scenario 1: save fails partway through the write (real EFBIG) ===
+original bytes: 35 | payload bytes: 9504
+child save error: EFBIG
+settings.json bytes after failed save: 35
+packages after reload: ["npm:@openclaw/keep"]
+PASS: settings.json fully preserved after failed save — 35 bytes
+PASS: user packages setting survives the reload
+
+=== Scenario 2: existing final settings.json symlink ===
+settings.json is still a symlink: true
+operator-managed target content: {"packages":["new"]}
+PASS: final settings.json symlink preserved
+PASS: symlink target received the update — {"packages":["new"]}
+
+ALL CHECKS PASSED
